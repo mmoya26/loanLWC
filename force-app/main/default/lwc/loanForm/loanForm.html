@@ -23,12 +23,12 @@
         <div class="slds-card__body slds-card__body_inner slds-grid slds-grid_vertical">
             <div class="slds-grid">
                 <lightning-input type="text" label="First Name" required></lightning-input>
-                <lightning-input type="text" label="Last Name" required></lightning-input>
+                <lightning-input type="text" label="Last Name" class="slds-m-left_small" required></lightning-input>
             </div>
 
             <div class="slds-grid">
-                <lightning-input type="text" label="Email Address" required></lightning-input>
-                <lightning-input type="text" label="Date of Birth" required></lightning-input>
+                <lightning-input type="email" label="Email Address" required></lightning-input>
+                <lightning-input type="text" label="Date of Birth" class="slds-m-left_small" required></lightning-input>
             </div>
 
             <lightning-input type="text" label="Street Address" required></lightning-input>
@@ -41,7 +41,7 @@
                         <label class="slds-form-element__label" for="select-01">State</label>
                         <div class="slds-form-element__control">
                           <div class="slds-select_container">
-                            <select class="slds-select" id="select-01">
+                            <select class="slds-select slds-m-left_small" id="select-01" >
                               <option value=""></option>
                               <option value="WI">WI</option>
                               <option value="IA">IA</option>
@@ -52,9 +52,9 @@
                 </div>
             </div>
 
-            <div class="slds-grid">
-                <lightning-input type="text" label="Zip Code" required></lightning-input>
-                <lightning-input type="text" label="Phone Number" required></lightning-input>
+            <div class="slds-grid slds-m-bottom_small">
+                <lightning-input type="number" maxlength="5" label="Zip Code" required></lightning-input>
+                <lightning-input type="number" maxlength="10" label="Phone Number" class="slds-m-left_small" required></lightning-input>
             </div>
         </div>
     </article>

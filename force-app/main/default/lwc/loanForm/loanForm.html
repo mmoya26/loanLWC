@@ -41,14 +41,14 @@
                         <label class="slds-form-element__label" for="select-01">State</label>
                         <div class="slds-form-element__control">
                           <div class="slds-select_container">
-                            <select class="slds-select slds-m-left_small" id="select-01" >
+                            <select class="slds-select slds-m-left_small" id="select-01">
                               <option value=""></option>
                               <option value="WI">WI</option>
                               <option value="IA">IA</option>
                             </select>
                           </div>
                         </div>
-                      </div>
+                    </div>
                 </div>
             </div>
 
@@ -56,6 +56,9 @@
                 <lightning-input type="number" maxlength="5" label="Zip Code" required></lightning-input>
                 <lightning-input type="number" maxlength="10" label="Phone Number" class="slds-m-left_small" required></lightning-input>
             </div>
+
+            <lightning-checkbox-group class="slds-m-bottom_small wrap-text checkbox-width " name="Checkbox Group" label="Join Credit" options={options} value={value} onchange={handleChange}></lightning-checkbox-group>
+            <lightning-checkbox-group class="slds-m-bottom_small wrap-text checkbox-width " name="Another Group" label="Another Group" options={options} value={value} onchange={handleChange}></lightning-checkbox-group>
         </div>
     </article>
 </template>

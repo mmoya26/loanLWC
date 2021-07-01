@@ -11,3 +11,11 @@
     color: white;
     font-size: 16px;
 }
+
+.wrap-text {
+    word-wrap: break-word;
+}
+
+.checkbox-width {
+    width: 21.875rem;
+}

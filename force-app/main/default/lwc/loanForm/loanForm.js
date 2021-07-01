@@ -1,7 +1,7 @@
 import {LightningElement} from 'lwc';
 
 export default class LoanForm extends LightningElement {
-    value = ['option1'];
+    value = ['S'];
     states = ["AK",
         "AL",
         "AR",
@@ -60,10 +60,22 @@ export default class LoanForm extends LightningElement {
     ]
 
     get options() {
-        return [{
-            label: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla non augue leo. In feugiat nec odio at pretium. Quisque euismod non sapien eget efficitur.',
-            value: 'option1'
-        }];
+        return [
+            {
+                label: 'Separated',
+                value: 'S'
+            },
+
+            {
+                label: "Married",
+                value: "M"
+            },
+
+            {
+                label: "Unmarried",
+                value: "U"
+            }
+        ];
     }
 
     get selectedValues() {

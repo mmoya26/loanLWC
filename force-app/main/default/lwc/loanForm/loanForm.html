@@ -42,9 +42,9 @@
                         <div class="slds-form-element__control">
                           <div class="slds-select_container">
                             <select class="slds-select slds-m-left_small" id="select-01">
-                              <option value=""></option>
-                              <option value="WI">WI</option>
-                              <option value="IA">IA</option>
+                                <template for:each={states} for:item="state">
+                                    <option value={state} key={state}>{state}</option>
+                                </template>
                             </select>
                           </div>
                         </div>

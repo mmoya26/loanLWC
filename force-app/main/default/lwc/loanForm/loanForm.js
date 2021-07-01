@@ -75,12 +75,17 @@ export default class LoanForm extends LightningElement {
         this.value = e.detail.value;
     }
 
+
+    // Will handle the logic when the preview icon is clicked
     previewClicked(e) {
         let element = this.template.querySelector('.ssn_input');
 
+        // If the input field type attribute is currently "password" meaning that is hidden
         if (element.type === "password") {
+            // Set the input field type attribute to be "text" so that the customer can see their SSN
             element.type = "text";
         } else {
+            // If the input field type attribute is already "text" then set back the attribute to be "password"
             element.type = "password";
         }
     }

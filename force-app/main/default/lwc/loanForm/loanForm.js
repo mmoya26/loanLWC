@@ -74,4 +74,14 @@ export default class LoanForm extends LightningElement {
         console.log(e);
         this.value = e.detail.value;
     }
+
+    previewClicked(e) {
+        let element = this.template.querySelector('.ssn_input');
+
+        if (element.type === "password") {
+            element.type = "text";
+        } else {
+            element.type = "password";
+        }
+    }
 }

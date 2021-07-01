@@ -19,3 +19,13 @@
 .checkbox-width {
     width: 21.875rem;
 }
+
+.preview_icon_margins {
+    margin-top: 10px;
+    margin-left: 15px;
+}
+
+.ssn .slds-icon {
+    width: 0 !important;
+    height: 0 !important;
+}

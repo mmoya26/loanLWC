@@ -23,26 +23,26 @@
             <div class="blue_divider"><span>Personal Information</span></div>
             <div class="slds-card__body slds-card__body_inner slds-grid slds-grid_vertical">
                 <div class="slds-grid">
-                    <lightning-input type="text" label="First Name" required></lightning-input>
-                    <lightning-input type="text" label="Last Name" class="slds-m-left_small" required></lightning-input>
+                    <lightning-input type="text" label="First Name" class="first_name_input" required></lightning-input>
+                    <lightning-input type="text" label="Last Name" class="last_name_input slds-m-left_small" required></lightning-input>
                 </div>
     
                 <div class="slds-grid">
-                    <lightning-input type="email" label="Email Address" required></lightning-input>
-                    <lightning-input type="text" label="Date of Birth" class="slds-m-left_small" required></lightning-input>
+                    <lightning-input class="email_address_input" type="email" label="Email Address" required></lightning-input>
+                    <lightning-input type="text" label="Date of Birth" class="date_of_birth_input slds-m-left_small" required></lightning-input>
                 </div> 
     
                 <div class="slds-grid slds-grid_vertical-align-center ssn">
-                    <lightning-input onchange={formatSocialSecurityNumber} class="ssn_input" type="password" label="SSN" minlength="11" maxlength="11" required></lightning-input>
+                    <lightning-input onchange={formatSocialSecurityNumber} class="ssn_input social_security_number_input" type="password" label="SSN" minlength="11" maxlength="11" required></lightning-input>
                     <lightning-icon style="cursor: pointer;" onclick={previewClicked} size="x-small" class="slds-icon slds-icon-text-default preview_icon_margins" icon-name="utility:preview"></lightning-icon>
                 </div>
                 
-                <lightning-input type="text" label="Street Address" required></lightning-input>
-                <lightning-input type="text" label="Address Line #2"></lightning-input>
+                <lightning-input class="street_address_one_input" type="text" label="Street Address" required></lightning-input>
+                <lightning-input class="street_address_two_input" type="text" label="Address Line #2"></lightning-input>
     
                 <div class="slds-grid slds-grid_vertical">
                     <div class="slds-grid">
-                        <lightning-input type="text" label="City" required></lightning-input>
+                        <lightning-input class="city_input" type="text" label="City" required></lightning-input>
                         <div class="slds-form-element">
                             <label class="slds-form-element__label" for="select-01">State</label>
                             <div class="slds-form-element__control">

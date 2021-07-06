@@ -147,12 +147,23 @@ export default class LoanForm extends LightningElement {
         // If all input fields are properly filled out, proceed
         if (validInputs) {
             console.log("All inputs are valid");
+            this.saveBasicInformation();
         } else {
             console.log("Some inputs are invalid");
+            this.saveBasicInformation();
         }
     }
 
     saveBasicInformation() {
+        let firstNameInput = this.template.querySelector(".first_name_input").value;
+        let lastNameInput = this.template.querySelector(".last_name_input").value;
+        let emailAddressInput = this.template.querySelector(".email_address_input").value;
+        let dateOfBirthInput = this.template.querySelector(".date_of_birth_input").value;
+        let socialSecurityInput = this.template.querySelector(".social_security_number_input").value;
+        let streetAddressOneInput = this.template.querySelector(".street_address_one_input").value;
+        let streetAddressTwoInput = this.template.querySelector(".street_address_two_input").value;
+        let cityInput = this.template.querySelector(".city_input").value;
         
+        console.log(firstNameInput);
     }
 }

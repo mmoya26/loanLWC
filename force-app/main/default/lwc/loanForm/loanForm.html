@@ -32,7 +32,7 @@
             </div> 
 
             <div class="slds-grid slds-grid_vertical-align-center ssn">
-                <lightning-input class="ssn_input" type="password" label="SSN" maxlength="9" required></lightning-input>
+                <lightning-input onchange={formatSocialSecurityNumber} class="ssn_input" type="password" label="SSN" maxlength="11" required></lightning-input>
                 <lightning-icon style="cursor: pointer;" onclick={previewClicked} size="x-small" class="slds-icon slds-icon-text-default preview_icon_margins" icon-name="utility:preview"></lightning-icon>
             </div>
             

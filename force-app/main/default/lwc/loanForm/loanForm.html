@@ -1,69 +1,72 @@
 <template>
-    <article class="slds-card">
-        <div class="slds-card__header slds-grid">
-            <header class="slds-media slds-media_center slds-has-flexi-truncate">
-                <div class="slds-media__figure">
-                    <span class="slds-icon_container slds-icon-standard-account" title="account">
-                    <svg class="slds-icon slds-icon_small" aria-hidden="true">
-                        <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#account"></use>
-                    </svg>
-                    <span class="slds-assistive-text">account</span>
-                    </span>
-                </div>
-                <div class="slds-media__body">
-                    <h2 class="slds-card__header-title">
-                        <a href="#" class="slds-card__header-link slds-truncate" title="Accounts">
-                            <span>Loan Application</span>
-                        </a>
-                    </h2>
-                </div>
-            </header>
-        </div>
-        <div class="blue_divider"><span>Personal Information</span></div>
-        <div class="slds-card__body slds-card__body_inner slds-grid slds-grid_vertical">
-            <div class="slds-grid">
-                <lightning-input type="text" label="First Name" required></lightning-input>
-                <lightning-input type="text" label="Last Name" class="slds-m-left_small" required></lightning-input>
+    <div class="slds-form">
+        <article class="slds-card">
+            <div class="slds-card__header slds-grid">
+                <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                    <div class="slds-media__figure">
+                        <span class="slds-icon_container slds-icon-standard-account" title="account">
+                        <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                            <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#account"></use>
+                        </svg>
+                        <span class="slds-assistive-text">account</span>
+                        </span>
+                    </div>
+                    <div class="slds-media__body">
+                        <h2 class="slds-card__header-title">
+                            <a href="#" class="slds-card__header-link slds-truncate" title="Accounts">
+                                <span>Loan Application</span>
+                            </a>
+                        </h2>
+                    </div>
+                </header>
             </div>
-
-            <div class="slds-grid">
-                <lightning-input type="email" label="Email Address" required></lightning-input>
-                <lightning-input type="text" label="Date of Birth" class="slds-m-left_small" required></lightning-input>
-            </div> 
-
-            <div class="slds-grid slds-grid_vertical-align-center ssn">
-                <lightning-input onchange={formatSocialSecurityNumber} class="ssn_input" type="password" label="SSN" maxlength="11" required></lightning-input>
-                <lightning-icon style="cursor: pointer;" onclick={previewClicked} size="x-small" class="slds-icon slds-icon-text-default preview_icon_margins" icon-name="utility:preview"></lightning-icon>
-            </div>
-            
-            <lightning-input type="text" label="Street Address" required></lightning-input>
-            <lightning-input type="text" label="Address Line #2"></lightning-input>
-
-            <div class="slds-grid slds-grid_vertical">
+            <div class="blue_divider"><span>Personal Information</span></div>
+            <div class="slds-card__body slds-card__body_inner slds-grid slds-grid_vertical">
                 <div class="slds-grid">
-                    <lightning-input type="text" label="City" required></lightning-input>
-                    <div class="slds-form-element">
-                        <label class="slds-form-element__label" for="select-01">State</label>
-                        <div class="slds-form-element__control">
-                          <div class="slds-select_container">
-                            <select class="slds-select slds-m-left_small" id="select-01">
-                                <template for:each={states} for:item="state">
-                                    <option value={state} key={state}>{state}</option>
-                                </template>
-                            </select>
-                          </div>
+                    <lightning-input type="text" label="First Name" required></lightning-input>
+                    <lightning-input type="text" label="Last Name" class="slds-m-left_small" required></lightning-input>
+                </div>
+    
+                <div class="slds-grid">
+                    <lightning-input type="email" label="Email Address" required></lightning-input>
+                    <lightning-input type="text" label="Date of Birth" class="slds-m-left_small" required></lightning-input>
+                </div> 
+    
+                <div class="slds-grid slds-grid_vertical-align-center ssn">
+                    <lightning-input onchange={formatSocialSecurityNumber} class="ssn_input" type="password" label="SSN" maxlength="11" required></lightning-input>
+                    <lightning-icon style="cursor: pointer;" onclick={previewClicked} size="x-small" class="slds-icon slds-icon-text-default preview_icon_margins" icon-name="utility:preview"></lightning-icon>
+                </div>
+                
+                <lightning-input type="text" label="Street Address" required></lightning-input>
+                <lightning-input type="text" label="Address Line #2"></lightning-input>
+    
+                <div class="slds-grid slds-grid_vertical">
+                    <div class="slds-grid">
+                        <lightning-input type="text" label="City" required></lightning-input>
+                        <div class="slds-form-element">
+                            <label class="slds-form-element__label" for="select-01">State</label>
+                            <div class="slds-form-element__control">
+                              <div class="slds-select_container">
+                                <select class="slds-select slds-m-left_small" id="select-01">
+                                    <template for:each={states} for:item="state">
+                                        <option value={state} key={state}>{state}</option>
+                                    </template>
+                                </select>
+                              </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+    
+                <div class="slds-grid slds-m-bottom_small">
+                    <lightning-input type="number" maxlength="5" label="Zip Code" required></lightning-input>
+                    <lightning-input type="number" maxlength="10" label="Phone Number" class="slds-m-left_small" required></lightning-input>
+                </div>
+    
+                <lightning-radio-group class="slds-m-bottom_small wrap-text checkbox-width " name="Checkbox Group" label="Civil Status" options={options} value={value} onchange={handleChange}></lightning-radio-group>
+                <lightning-button class="slds-var-m-top_small" type="submit" label="Submit" onclick={validateFields}></lightning-button>          
             </div>
-
-            <div class="slds-grid slds-m-bottom_small">
-                <lightning-input type="number" maxlength="5" label="Zip Code" required></lightning-input>
-                <lightning-input type="number" maxlength="10" label="Phone Number" class="slds-m-left_small" required></lightning-input>
-            </div>
-
-            <lightning-radio-group class="slds-m-bottom_small wrap-text checkbox-width " name="Checkbox Group" label="Civil Status" options={options} value={value} onchange={handleChange}></lightning-radio-group>
-        </div>
-    </article>
+        </article>
+    </div>
 </template>
     

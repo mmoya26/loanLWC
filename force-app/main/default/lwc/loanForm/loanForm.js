@@ -103,8 +103,8 @@ export default class LoanForm extends LightningElement {
         }
     }
 
-    // This function will handle the Social Securit Number formatting
-    // Whenever there is a change in the value of the input field, this function will be called
+    /* This function will handle the Social Securit Number formatting
+     Whenever there is a change in the value of the input field, this function will be called */
     formatSocialSecurityNumber(e) {
         let val = e.target.value.replace(/\D/g, '');
         val = val.replace(/^(\d{3})/, '$1-');
@@ -113,5 +113,17 @@ export default class LoanForm extends LightningElement {
 
         // Set the value of our e.target(input) to be equals to the correct val.
         e.target.value = val;
+    }
+
+    /* 
+    This function will be called when the "submit" button is clicked
+    and will validate all of the forms that have the attribute of required
+    to make sure that they are not empty
+    */
+    validateFields() {
+        this.template.querySelectorAll('lightning-input').forEach(element => {
+            console.log(element);
+            element.reportValidity();
+        });
     }
 }

@@ -3,6 +3,21 @@ import {LightningElement} from 'lwc';
 export default class LoanForm extends LightningElement {
     value = ['S'];
 
+    basicInformation = {
+        firstName: "",
+        lastName: "",
+        emailAddress: "",
+        dateOfBirth: "",
+        SSN: "",
+        streetAddress1: "",
+        streetAddress2: "",
+        city: "",
+        state: "",
+        zipCode: "",
+        phoneNumber: "",
+        civilStatus: ""
+    }
+
     // List of all states for the State select field to be populated
     states = ["AK",
         "AL",
@@ -135,5 +150,9 @@ export default class LoanForm extends LightningElement {
         } else {
             console.log("Some inputs are invalid");
         }
+    }
+
+    saveBasicInformation() {
+        
     }
 }

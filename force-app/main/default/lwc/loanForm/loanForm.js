@@ -121,9 +121,19 @@ export default class LoanForm extends LightningElement {
     to make sure that they are not empty
     */
     validateFields() {
+        let validInputs = false;
         this.template.querySelectorAll('lightning-input').forEach(element => {
-            console.log(element);
-            element.reportValidity();
+            /* reportValidity() returns true or false based on whether or not
+            an input field was filled out properly or not and this callback function will run for
+            every lightning-input element found in the form*/
+            validInputs = element.reportValidity();
         });
+
+        // If all input fields are properly filled out, proceed
+        if (validInputs) {
+            console.log("All inputs are valid");
+        } else {
+            console.log("Some inputs are invalid");
+        }
     }
 }

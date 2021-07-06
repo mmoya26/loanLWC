@@ -33,7 +33,7 @@
                 </div> 
     
                 <div class="slds-grid slds-grid_vertical-align-center ssn">
-                    <lightning-input onchange={formatSocialSecurityNumber} class="ssn_input" type="password" label="SSN" maxlength="11" required></lightning-input>
+                    <lightning-input onchange={formatSocialSecurityNumber} class="ssn_input" type="password" label="SSN" minlength="11" maxlength="11" required></lightning-input>
                     <lightning-icon style="cursor: pointer;" onclick={previewClicked} size="x-small" class="slds-icon slds-icon-text-default preview_icon_margins" icon-name="utility:preview"></lightning-icon>
                 </div>
                 
@@ -63,8 +63,8 @@
                     <lightning-input type="number" maxlength="10" label="Phone Number" class="slds-m-left_small" required></lightning-input>
                 </div>
     
-                <lightning-radio-group class="slds-m-bottom_small wrap-text checkbox-width " name="Checkbox Group" label="Civil Status" options={options} value={value} onchange={handleChange}></lightning-radio-group>
-                <lightning-button class="slds-var-m-top_small" type="submit" label="Submit" onclick={validateFields}></lightning-button>          
+                <lightning-radio-group class="slds-m-bottom_small wrap-text checkbox-width" name="Checkbox Group" label="Civil Status" options={options} value={value} onchange={handleChange} required></lightning-radio-group>
+                <lightning-button class="slds-var-m-bottom_small" type="submit" label="Submit" onclick={validateFields}></lightning-button>          
             </div>
         </article>
     </div>

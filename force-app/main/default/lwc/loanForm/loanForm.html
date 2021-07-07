@@ -47,7 +47,7 @@
                             <label class="slds-form-element__label" for="select-01">State</label>
                             <div class="slds-form-element__control">
                               <div class="slds-select_container">
-                                <select class="slds-select slds-m-left_small" id="select-01">
+                                <select class="slds-select slds-m-left_small state_input" id="select-01">
                                     <template for:each={states} for:item="state">
                                         <option value={state} key={state}>{state}</option>
                                     </template>
@@ -59,8 +59,8 @@
                 </div>
     
                 <div class="slds-grid slds-m-bottom_small">
-                    <lightning-input type="number" maxlength="5" label="Zip Code" required></lightning-input>
-                    <lightning-input type="number" maxlength="10" label="Phone Number" class="slds-m-left_small" required></lightning-input>
+                    <lightning-input type="number" maxlength="5" label="Zip Code" class="zip_code_input" required></lightning-input>
+                    <lightning-input type="number" maxlength="10" label="Phone Number" class="slds-m-left_small phone_number_input" required></lightning-input>
                 </div>
     
                 <lightning-radio-group class="slds-m-bottom_small wrap-text checkbox-width" name="Checkbox Group" label="Civil Status" options={options} value={value} onchange={handleChange} required></lightning-radio-group>

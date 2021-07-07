@@ -100,7 +100,6 @@ export default class LoanForm extends LightningElement {
     }
 
     handleChange(e) {
-        console.log(e);
         this.value = e.detail.value;
     }
 
@@ -150,7 +149,6 @@ export default class LoanForm extends LightningElement {
             this.saveBasicInformation();
         } else {
             console.log("Some inputs are invalid");
-            this.saveBasicInformation();
         }
     }
 
@@ -163,7 +161,37 @@ export default class LoanForm extends LightningElement {
         let streetAddressOneInput = this.template.querySelector(".street_address_one_input").value;
         let streetAddressTwoInput = this.template.querySelector(".street_address_two_input").value;
         let cityInput = this.template.querySelector(".city_input").value;
+        let stateInput = this.template.querySelector(".state_input").value;
+        let zipCodeInput = this.template.querySelector(".zip_code_input").value;
+        let phoneNumberInput = this.template.querySelector(".phone_number_input").value;
+        let civilStatusInput = this.value;
+
+        this.basicInformation.firstName = firstNameInput;
+        this.basicInformation.lastName = lastNameInput;
+        this.basicInformation.emailAddress = emailAddressInput;
+        this.basicInformation.dateOfBirth = dateOfBirthInput;
+        this.basicInformation.SSN = socialSecurityInput;
+        this.basicInformation.streetAddress1 = streetAddressOneInput;
+        this.basicInformation.streetAddress2 = streetAddressTwoInput;
+        this.basicInformation.city = cityInput;
+        this.basicInformation.state = stateInput;
+        this.basicInformation.zipCode = zipCodeInput;
+        this.basicInformation.phoneNumber = phoneNumberInput;
+        this.basicInformation.civilStatus = civilStatusInput;
+
+        console.log(this.basicInformation);
         
-        console.log(firstNameInput);
+        // console.log(firstNameInput);
+        // console.log(lastNameInput);
+        // console.log(emailAddressInput);
+        // console.log(dateOfBirthInput);
+        // console.log(socialSecurityInput);
+        // console.log(streetAddressOneInput);
+        // console.log(streetAddressTwoInput);
+        // console.log(cityInput);
+        // console.log(stateInput);
+        // console.log(zipCodeInput);
+        // console.log(phoneNumberInput);
+        // console.log(civilStatusInput);
     }
 }

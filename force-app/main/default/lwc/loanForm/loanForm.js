@@ -1,14 +1,20 @@
 import {LightningElement} from 'lwc';
+import { createRecord } from 'lightning/uiRecordApi';
 import LOAN_OBJECT from '@salesforce/schema/Loan__c'
-import FIRSTNAME_FIELD from '@salesforce/schema/Loan__c.FirstName__c'
-import LASTNAME_FIELD from '@salesforce/schema/Loan__c.LastName__c'
-import PHONENUMBER_FIELD from '@salesforce/schema/Loan__c.PhoneNumber__c'
+import FIRST_NAME_FIELD from '@salesforce/schema/Loan__c.FirstName__c'
+import LAST_NAME_FIELD from '@salesforce/schema/Loan__c.LastName__c'
+import EMAIL_ADDRESS_FIELD from '@salesforce/schema/Loan__c.EmailAddress__c'
+import DATE_OF_BIRTH_FIELD from '@salesforce/schema/Loan__c.DateOfBirth__c'
+import SSN_FIELD from '@salesforce/schema/Loan__c.SSN__c'
+import STREET_ADDRESS_ONE_FIELD from '@salesforce/schema/Loan__c.StreetAdressOne__c'
+import STREET_ADDRESS_TWO_FIELD from '@salesforce/schema/Loan__c.StreetAdressTwo__c'
+import CITY_FIELD from '@salesforce/schema/Loan__c.City__c'
+import STATE_FIELD from '@salesforce/schema/Loan__c.State__c'
+import ZIP_CODE_FIELD from '@salesforce/schema/Loan__c.ZipCode__c'
+import PHONE_NUMBER_FIELD from '@salesforce/schema/Loan__c.PhoneNumber__c'
+import CIVIL_STATUS_FIELD from '@salesforce/schema/Loan__c.CivilStatus__c'
 
 export default class LoanForm extends LightningElement {
-
-    objectApiName = LOAN_OBJECT;
-    fields = [FIRSTNAME_FIELD, LASTNAME_FIELD, PHONENUMBER_FIELD];
-
     value = ['S'];
 
     basicInformation = {
@@ -17,8 +23,8 @@ export default class LoanForm extends LightningElement {
         emailAddress: "",
         dateOfBirth: "",
         SSN: "",
-        streetAddress1: "",
-        streetAddress2: "",
+        streetAddressOne: "",
+        streetAddressTwo: "",
         city: "",
         state: "",
         zipCode: "",
@@ -107,11 +113,6 @@ export default class LoanForm extends LightningElement {
         return this.value.join(',');
     }
 
-    handleSuccess(e) {
-        console.log("Record created");
-        console.log("Record Id:" + e.detail.id);
-    }
-
     handleChange(e) {
         this.value = e.detail.value;
     }
@@ -147,7 +148,7 @@ export default class LoanForm extends LightningElement {
     and will validate all of the forms that have the attribute of required
     to make sure that they are not empty
     */
-    validateFields() {
+    validateFields(e) {
         let validInputs = false;
         this.template.querySelectorAll('lightning-input').forEach(element => {
             /* reportValidity() returns true or false based on whether or not
@@ -166,6 +167,7 @@ export default class LoanForm extends LightningElement {
     }
 
     saveBasicInformation() {
+        // Selecting all of the inputs and their values
         let firstNameInput = this.template.querySelector(".first_name_input").value;
         let lastNameInput = this.template.querySelector(".last_name_input").value;
         let emailAddressInput = this.template.querySelector(".email_address_input").value;
@@ -179,13 +181,14 @@ export default class LoanForm extends LightningElement {
         let phoneNumberInput = this.template.querySelector(".phone_number_input").value;
         let civilStatusInput = this.value;
 
+        // Setting the data of each key with according value to the basicInformation object
         this.basicInformation.firstName = firstNameInput;
         this.basicInformation.lastName = lastNameInput;
         this.basicInformation.emailAddress = emailAddressInput;
         this.basicInformation.dateOfBirth = dateOfBirthInput;
         this.basicInformation.SSN = socialSecurityInput;
-        this.basicInformation.streetAddress1 = streetAddressOneInput;
-        this.basicInformation.streetAddress2 = streetAddressTwoInput;
+        this.basicInformation.streetAddressOne = streetAddressOneInput;
+        this.basicInformation.streetAddressTwo = streetAddressTwoInput;
         this.basicInformation.city = cityInput;
         this.basicInformation.state = stateInput;
         this.basicInformation.zipCode = zipCodeInput;
@@ -193,18 +196,35 @@ export default class LoanForm extends LightningElement {
         this.basicInformation.civilStatus = civilStatusInput;
 
         console.log(this.basicInformation);
-        
-        // console.log(firstNameInput);
-        // console.log(lastNameInput);
-        // console.log(emailAddressInput);
-        // console.log(dateOfBirthInput);
-        // console.log(socialSecurityInput);
-        // console.log(streetAddressOneInput);
-        // console.log(streetAddressTwoInput);
-        // console.log(cityInput);
-        // console.log(stateInput);
-        // console.log(zipCodeInput);
-        // console.log(phoneNumberInput);
-        // console.log(civilStatusInput);
+
+        // Create record after saving all of the data to basicInformation object
+        this.createLoanRecord();
+    }
+
+    createLoanRecord() {
+        const fields = {};
+
+        // All fields that used to store the data from basicInformation object 
+        fields[FIRST_NAME_FIELD.fieldApiName] = this.basicInformation.firstName;
+        fields[LAST_NAME_FIELD.fieldApiName] = this.basicInformation.lastName;
+        fields[EMAIL_ADDRESS_FIELD.fieldApiName] = this.basicInformation.emailAddress;
+        fields[DATE_OF_BIRTH_FIELD.fieldApiName] = this.basicInformation.dateOfBirth;
+        fields[SSN_FIELD.fieldApiName] = this.basicInformation.SSN;
+        fields[STREET_ADDRESS_ONE_FIELD.fieldApiName] = this.basicInformation.streetAddressOne;
+        fields[STREET_ADDRESS_TWO_FIELD.fieldApiName] = this.basicInformation.streetAddressTwo;
+        fields[CITY_FIELD.fieldApiName] = this.basicInformation.city;
+        fields[STATE_FIELD.fieldApiName] = this.basicInformation.state;
+        fields[ZIP_CODE_FIELD.fieldApiName] = this.basicInformation.zipCode;
+        fields[PHONE_NUMBER_FIELD.fieldApiName] = this.basicInformation.phoneNumber;
+        fields[CIVIL_STATUS_FIELD.fieldApiName] = this.basicInformation.civilStatus;
+
+        const recordInput = { apiName: LOAN_OBJECT.objectApiName, fields};
+        createRecord(recordInput)
+            .then(() => {
+                console.log("Loan Record created sucessfully");
+            })
+            .catch(error => {
+                console.log("Error creating record" + "Eror body message:" + error.body.message);
+            });
     }
 }

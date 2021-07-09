@@ -1,6 +1,14 @@
 import {LightningElement} from 'lwc';
+import LOAN_OBJECT from '@salesforce/schema/Loan__c'
+import FIRSTNAME_FIELD from '@salesforce/schema/Loan__c.FirstName__c'
+import LASTNAME_FIELD from '@salesforce/schema/Loan__c.LastName__c'
+import PHONENUMBER_FIELD from '@salesforce/schema/Loan__c.PhoneNumber__c'
 
 export default class LoanForm extends LightningElement {
+
+    objectApiName = LOAN_OBJECT;
+    fields = [FIRSTNAME_FIELD, LASTNAME_FIELD, PHONENUMBER_FIELD];
+
     value = ['S'];
 
     basicInformation = {
@@ -97,6 +105,11 @@ export default class LoanForm extends LightningElement {
 
     get selectedValues() {
         return this.value.join(',');
+    }
+
+    handleSuccess(e) {
+        console.log("Record created");
+        console.log("Record Id:" + e.detail.id);
     }
 
     handleChange(e) {

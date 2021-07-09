@@ -64,9 +64,16 @@
                 </div>
     
                 <lightning-radio-group class="slds-m-bottom_small wrap-text checkbox-width" name="Checkbox Group" label="Civil Status" options={options} value={value} onchange={handleChange} required></lightning-radio-group>
-                <lightning-button class="slds-var-m-bottom_small" type="submit" label="Submit" onclick={validateFields}></lightning-button>          
+                <lightning-button class="slds-var-m-bottom_small" type="submit" label="Submit" onclick={validateFields}></lightning-button>  
             </div>
         </article>
     </div>
+
+    <lightning-card>
+        <lightning-record-form
+            object-api-name={objectApiName}
+            fields={fields}
+            onsuccess={handleSuccess}>
+        </lightning-record-form>
+    </lightning-card>
 </template>
-    

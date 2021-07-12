@@ -1,6 +1,6 @@
 <template>
     <div class="slds-form">
-        <article class="slds-card">
+        <article class="slds-card" style="overflow: hidden;">
             <div class="slds-card__header slds-grid">
                 <header class="slds-media slds-media_center slds-has-flexi-truncate">
                     <div class="slds-media__figure">
@@ -29,7 +29,7 @@
     
                 <div class="slds-grid">
                     <lightning-input class="email_address_input" type="email" label="Email Address" required></lightning-input>
-                    <lightning-input type="text" label="Date of Birth" class="date_of_birth_input slds-m-left_small" required></lightning-input>
+                    <lightning-input type="date" style="width: 11.625rem;" label="Date of Birth" class="date_of_birth_input slds-m-left_small" required></lightning-input>
                 </div> 
     
                 <div class="slds-grid slds-grid_vertical-align-center ssn">
@@ -37,8 +37,8 @@
                     <lightning-icon style="cursor: pointer;" onclick={previewClicked} size="x-small" class="slds-icon slds-icon-text-default preview_icon_margins" icon-name="utility:preview"></lightning-icon>
                 </div>
                 
-                <lightning-input class="street_address_one_input" type="text" label="Street Address" required></lightning-input>
-                <lightning-input class="street_address_two_input" type="text" label="Address Line #2"></lightning-input>
+                <lightning-input class="street_address_one_input" style="width: 25.125rem;" type="text" label="Street Address" required></lightning-input>
+                <lightning-input class="street_address_two_input" style="width: 25.125rem;" type="text" label="Address Line #2"></lightning-input>
     
                 <div class="slds-grid slds-grid_vertical">
                     <div class="slds-grid">

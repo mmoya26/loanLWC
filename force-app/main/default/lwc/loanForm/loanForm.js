@@ -1,4 +1,4 @@
-import {LightningElement} from 'lwc';
+import {LightningElement, track} from 'lwc';
 import { createRecord } from 'lightning/uiRecordApi';
 import LOAN_OBJECT from '@salesforce/schema/Loan__c'
 import FIRST_NAME_FIELD from '@salesforce/schema/Loan__c.FirstName__c'
@@ -16,6 +16,8 @@ import CIVIL_STATUS_FIELD from '@salesforce/schema/Loan__c.CivilStatus__c'
 
 export default class LoanForm extends LightningElement {
     value = ['S'];
+
+    @track step = "1";
 
     basicInformation = {
         firstName: "",
@@ -235,14 +237,18 @@ export default class LoanForm extends LightningElement {
         const recordInput = { apiName: LOAN_OBJECT.objectApiName, fields};
         createRecord(recordInput)
             .then(() => {
-                console.log("Loan Record created sucessfully");
-                
+                console.log("Loan Record created sucessfully");      
                 // Clean all input fields
                 this.cleanInputFields();
+
+                alert("Loan submitted properly");
+
+                
             })
             .catch(error => {
                 console.warn("Possibly an error");
             });
+        this.updateProgressBar();
     }
 
     cleanInputFields() {
@@ -263,6 +269,12 @@ export default class LoanForm extends LightningElement {
         } else {
             e.preventDefault();
         }
+    }
+
+    updateProgressBar() {
+        let stringToNumber = parseInt(this.step);
+        stringToNumber++;
+        this.step = stringToNumber.toString();
     }
 
     // This function wil be executed when the component is fully rendered

@@ -150,19 +150,33 @@ export default class LoanForm extends LightningElement {
     */
     validateFields(e) {
         let validInputs = false;
-        this.template.querySelectorAll('lightning-input').forEach(element => {
+
+        /* Converting the NodeList retuned from querySelectorAll to an array so we can use the .every() method
+        that is only available for arrays */
+        let inputs = [...this.template.querySelectorAll('lightning-input')];
+
+        inputs.every(element => {
             /* reportValidity() returns true or false based on whether or not
             an input field was filled out properly or not and this callback function will run for
             every lightning-input element found in the form*/
             validInputs = element.reportValidity();
+
+            /* If any of the inputs returns false from reportValidity() then we want to immediatly 
+            exit out of the every() loop and warn the user that an input is invalid */
+            if (validInputs === false) {
+                console.log("Exiting the validateFields() due to some input being invalid");
+                return false;
+            }
+
+            // Need to return true in order for every() to keep looping through the array
+            return true;
         });
 
-        // If all input fields are properly filled out, proceed
-        if (validInputs) {
-            console.log("All inputs are valid");
+        /* If all input fields are valid then this line of code will be reached 
+        and the information of the input fields will be stored */
+        if(validInputs) {
+            console.log("Saving information...");
             this.saveBasicInformation();
-        } else {
-            console.log("Some inputs are invalid");
         }
     }
 
@@ -222,9 +236,22 @@ export default class LoanForm extends LightningElement {
         createRecord(recordInput)
             .then(() => {
                 console.log("Loan Record created sucessfully");
+                
+                // Clean all input fields
+                this.cleanInputFields();
             })
             .catch(error => {
-                console.log("Error creating record" + "Eror body message:" + error.body.message);
+                console.warn("Possibly an error");
             });
+    }
+
+    cleanInputFields() {
+        this.template.querySelectorAll('lightning-input').forEach(element => {
+            element.value = "";
+        });
+
+        // Reset value of radio buttons
+        // Still need to figure out a way to update the UI
+        value = ['S'];
     }
 }

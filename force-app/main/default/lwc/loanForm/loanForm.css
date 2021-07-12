@@ -29,3 +29,13 @@
     width: 0 !important;
     height: 0 !important;
 }
+
+.personal_info_block {
+    transition: all ease .5s;
+    transition-property: opacity, visibility;
+}
+
+.visibility {
+    opacity: 0;
+    visibility: hidden;
+}

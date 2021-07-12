@@ -254,4 +254,24 @@ export default class LoanForm extends LightningElement {
         // Still need to figure out a way to update the UI
         value = ['S'];
     }
+
+    // This function will be called every time a key is pressed in the Zip Code input field
+    validateZipCode(e) {
+        const key = e.keyCode;
+	    if (key >= 48 && key <= 57) {
+            // Input is a number
+        } else {
+            e.preventDefault();
+        }
+    }
+
+    // This function wil be executed when the component is fully rendered
+    renderedCallback() {
+
+        /* Set up keypress event listener for the zip code input
+        Need keypress event instead of onchange attribute like the rest of the input fields
+        due to the logic used in validateZipCode() to check if the user is entering something other than a number key */
+        const zipCodeInput = this.template.querySelector(".zip_code_input");
+        zipCodeInput.addEventListener("keypress", this.validateZipCode);
+    }
 }

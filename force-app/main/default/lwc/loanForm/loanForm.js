@@ -256,7 +256,7 @@ export default class LoanForm extends LightningElement {
     }
 
     // This function will be called every time a key is pressed in the Zip Code input field
-    validateZipCode(e) {
+    isNumeric(e) {
         const key = e.keyCode;
 	    if (key >= 48 && key <= 57) {
             // Input is a number
@@ -268,10 +268,13 @@ export default class LoanForm extends LightningElement {
     // This function wil be executed when the component is fully rendered
     renderedCallback() {
 
-        /* Set up keypress event listener for the zip code input
-        Need keypress event instead of onchange attribute like the rest of the input fields
-        due to the logic used in validateZipCode() to check if the user is entering something other than a number key */
+        /* Set up keypress event listener for the zip code and phone numbeer input fields.
+        Need the keypress event instead of the onchange attribute like the rest of the input fields
+        due to the logic used in isNumeric() to check if the user is entering something other than a number in the inputs */
         const zipCodeInput = this.template.querySelector(".zip_code_input");
-        zipCodeInput.addEventListener("keypress", this.validateZipCode);
+        zipCodeInput.addEventListener("keypress", this.isNumeric);
+
+        const phoneNumberInput = this.template.querySelector(".phone_number_input");
+        phoneNumberInput.addEventListener("keypress", this.isNumeric);
     }
 }

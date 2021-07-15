@@ -39,5 +39,8 @@
     "**/{aura|lwc}/**": [
       "eslint"
     ]
+  },
+  "dependencies": {
+    "@okta/okta-signin-widget": "^5.8.2"
   }
 }

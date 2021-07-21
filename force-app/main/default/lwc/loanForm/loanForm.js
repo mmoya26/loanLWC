@@ -155,7 +155,7 @@ export default class LoanForm extends LightningElement {
 
         /* Converting the NodeList retuned from querySelectorAll to an array so we can use the .every() method
         that is only available for arrays */
-        let inputs = [...this.template.querySelectorAll('lightning-input')];
+        let inputs = [...this.template.querySelectorAll('.active lightning-input')];
 
         inputs.every(element => {
             /* reportValidity() returns true or false based on whether or not
@@ -248,7 +248,12 @@ export default class LoanForm extends LightningElement {
             .catch(error => {
                 console.warn("Possibly an error");
             });
+
+        // Update Progess Bar
         this.updateProgressBar();
+
+        // Switch blocks
+        this.switchBlocks();
     }
 
     cleanInputFields() {
@@ -288,5 +293,17 @@ export default class LoanForm extends LightningElement {
 
         const phoneNumberInput = this.template.querySelector(".phone_number_input");
         phoneNumberInput.addEventListener("keypress", this.isNumeric);
+    }
+
+    switchBlocks() {
+        // Personal Information Block element
+        let personalInformationBlock = this.template.querySelector(".personal_info_block");
+        personalInformationBlock.classList.add("hidden");
+        personalInformationBlock.classList.remove("active");
+
+        // Loan Informatgion Block element
+        let loanInformationBlock = this.template.querySelector(".loan_info_block");
+        loanInformationBlock.classList.remove("hidden");
+        loanInformationBlock.classList.add("active");
     }
 }

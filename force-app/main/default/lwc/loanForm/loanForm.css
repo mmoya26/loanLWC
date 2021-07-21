@@ -30,12 +30,12 @@
     height: 0 !important;
 }
 
-.personal_info_block {
+.info_blocks {
     transition: all ease .5s;
-    transition-property: opacity, visibility;
+    transition-property: opacity, display;
 }
 
-.visibility {
+.hidden {
     opacity: 0;
-    visibility: hidden;
+    display: none;
 }

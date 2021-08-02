@@ -13,11 +13,15 @@ import STATE_FIELD from '@salesforce/schema/Loan__c.State__c'
 import ZIP_CODE_FIELD from '@salesforce/schema/Loan__c.ZipCode__c'
 import PHONE_NUMBER_FIELD from '@salesforce/schema/Loan__c.PhoneNumber__c'
 import CIVIL_STATUS_FIELD from '@salesforce/schema/Loan__c.CivilStatus__c'
+import LOAN_AMOUNT_FIELD from '@salesforce/schema/Loan__c.LoanAmount__c'
+import LOAN_PURPOSE_FIELD from '@salesforce/schema/Loan__c.LoanPurpose__c'
+
 
 export default class LoanForm extends LightningElement {
     value = ['S'];
 
     @track step = "1";
+    blockNumber = 1;
 
     basicInformation = {
         firstName: "",
@@ -32,6 +36,11 @@ export default class LoanForm extends LightningElement {
         zipCode: "",
         phoneNumber: "",
         civilStatus: ""
+    }
+
+    loanInformation = {
+        loanPurpose: "",
+        loanAmount: ""
     }
 
     // List of all states for the State select field to be populated
@@ -176,14 +185,32 @@ export default class LoanForm extends LightningElement {
 
         /* If all input fields are valid then this line of code will be reached 
         and the information of the input fields will be stored */
-        if(validInputs) {
-            console.log("Saving information...");
-            this.saveBasicInformation();
+        if(validInputs && this.blockNumber === 1) {
+            console.log("Saving customer basic information...");
+            this.saveCustomerBasicInformation();
+
+            // Update blockNumber variable that keeps track of which current block we are one
+            this.blockNumber++;
+
+            // Display block number 2 to gather loan information
+            this.switchBlocks();
+
+            return;
+        }
+
+        if (validInputs && this.blockNumber === 2) {
+            console.log("Saving customer loan information...");
+            this.saveCustomerLoanInformation();
+
+            /* Since block number 2 is the last block in the form, we can 
+            create the loan record right away after we finish saving the loan
+            information */
+            this.createLoanRecord();
         }
     }
 
-    saveBasicInformation() {
-        // Selecting all of the inputs and their values
+    saveCustomerBasicInformation() {
+        // Selecting all of the inputs and their values from the first block of information
         let firstNameInput = this.template.querySelector(".first_name_input").value;
         let lastNameInput = this.template.querySelector(".last_name_input").value;
         let emailAddressInput = this.template.querySelector(".email_address_input").value;
@@ -212,9 +239,18 @@ export default class LoanForm extends LightningElement {
         this.basicInformation.civilStatus = civilStatusInput;
 
         console.log(this.basicInformation);
+    }
 
-        // Create record after saving all of the data to basicInformation object
-        this.createLoanRecord();
+    saveCustomerLoanInformation() {
+        // Selecting all of the inputs and their values from the second(last) block of information
+        let loanPurposeInput = this.template.querySelector(".loan_purpose_input").value;
+        let loanAmountInput = this.template.querySelector(".loan_amount_input").value;
+
+        // Setting the data of each key with according value to the loanInformation object
+        this.loanInformation.loanPurpose = loanPurposeInput;
+        this.loanInformation.loanAmount = loanAmountInput;
+
+        console.log(this.loanInformation);
     }
 
     createLoanRecord() {
@@ -233,6 +269,8 @@ export default class LoanForm extends LightningElement {
         fields[ZIP_CODE_FIELD.fieldApiName] = this.basicInformation.zipCode;
         fields[PHONE_NUMBER_FIELD.fieldApiName] = this.basicInformation.phoneNumber;
         fields[CIVIL_STATUS_FIELD.fieldApiName] = this.basicInformation.civilStatus;
+        fields[LOAN_PURPOSE_FIELD.fieldApiName] = this.loanInformation.loanPurpose;
+        fields[LOAN_AMOUNT_FIELD.fieldApiName] = this.loanInformation.loanAmount;
 
         const recordInput = { apiName: LOAN_OBJECT.objectApiName, fields};
         createRecord(recordInput)
@@ -241,9 +279,7 @@ export default class LoanForm extends LightningElement {
                 // Clean all input fields
                 this.cleanInputFields();
 
-                alert("Loan submitted properly");
-
-                
+                console.log("Loan submitted properly");    
             })
             .catch(error => {
                 console.warn("Possibly an error");
@@ -251,9 +287,6 @@ export default class LoanForm extends LightningElement {
 
         // Update Progess Bar
         this.updateProgressBar();
-
-        // Switch blocks
-        this.switchBlocks();
     }
 
     cleanInputFields() {

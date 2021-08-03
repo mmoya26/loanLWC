@@ -88,10 +88,9 @@
                 <div class="blue_divider"><span>Loan Information</span></div>
                 <div class="slds-card__body slds-card__body_inner slds-grid slds-grid_vertical">
                     <div class="slds-grid">
-                        <lightning-input type="text" label="Loan Purpose" class="loan_purpose_input" required>
+                        <lightning-input type="text" label="Loan Purpose" class="loan_purpose_input">
                         </lightning-input>
-                        <lightning-input type="text" label="Loan Amount" class="loan_amount_input slds-m-left_small"
-                            required></lightning-input>
+                        <lightning-input type="number" minlength="1" maxlength="7" label="Loan Amount" class="loan_amount_input slds-m-left_small"></lightning-input>
                     </div>
                 </div>
             </div>

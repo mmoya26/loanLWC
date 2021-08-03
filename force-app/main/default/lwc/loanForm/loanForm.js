@@ -175,6 +175,7 @@ export default class LoanForm extends LightningElement {
             /* If any of the inputs returns false from reportValidity() then we want to immediatly 
             exit out of the every() loop and warn the user that an input is invalid */
             if (validInputs === false) {
+                console.log(element);
                 console.log("Exiting the validateFields() due to some input being invalid");
                 return false;
             }
@@ -254,6 +255,8 @@ export default class LoanForm extends LightningElement {
     }
 
     createLoanRecord() {
+        console.log("Creating Loan Record...");
+
         const fields = {};
 
         // All fields that used to store the data from basicInformation object 
@@ -275,18 +278,14 @@ export default class LoanForm extends LightningElement {
         const recordInput = { apiName: LOAN_OBJECT.objectApiName, fields};
         createRecord(recordInput)
             .then(() => {
-                console.log("Loan Record created sucessfully");      
-                // Clean all input fields
-                this.cleanInputFields();
+                console.log("Loan Record created sucessfully");
 
-                console.log("Loan submitted properly");    
+                // Clean all input fields
+                this.cleanInputFields(); 
             })
             .catch(error => {
                 console.warn("Possibly an error");
             });
-
-        // Update Progess Bar
-        this.updateProgressBar();
     }
 
     cleanInputFields() {
@@ -338,5 +337,8 @@ export default class LoanForm extends LightningElement {
         let loanInformationBlock = this.template.querySelector(".loan_info_block");
         loanInformationBlock.classList.remove("hidden");
         loanInformationBlock.classList.add("active");
+
+        // Update Progess Bar
+        this.updateProgressBar();
     }
 }

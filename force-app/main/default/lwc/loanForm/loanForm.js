@@ -22,8 +22,7 @@ export default class LoanForm extends LightningElement {
     value = ['S'];
 
     @track step = "1";
-    blockNumber = 1;
-
+    
     personalInfoPageActive = true;
 
     basicInformation = {

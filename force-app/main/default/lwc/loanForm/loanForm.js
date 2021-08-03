@@ -15,7 +15,8 @@ import PHONE_NUMBER_FIELD from '@salesforce/schema/Loan__c.PhoneNumber__c'
 import CIVIL_STATUS_FIELD from '@salesforce/schema/Loan__c.CivilStatus__c'
 import LOAN_AMOUNT_FIELD from '@salesforce/schema/Loan__c.LoanAmount__c'
 import LOAN_PURPOSE_FIELD from '@salesforce/schema/Loan__c.LoanPurpose__c'
-
+import templateOne from './loanForm.html';
+import templateTwo from './loanInformation.html';
 
 export default class LoanForm extends LightningElement {
     value = ['S'];
@@ -126,6 +127,10 @@ export default class LoanForm extends LightningElement {
 
     handleChange(e) {
         this.value = e.detail.value;
+    }
+
+    render() {
+        return templateOne;
     }
 
     // This fuction will handle the logic when the preview icon is clicked

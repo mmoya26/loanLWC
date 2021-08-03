@@ -15,14 +15,16 @@ import PHONE_NUMBER_FIELD from '@salesforce/schema/Loan__c.PhoneNumber__c'
 import CIVIL_STATUS_FIELD from '@salesforce/schema/Loan__c.CivilStatus__c'
 import LOAN_AMOUNT_FIELD from '@salesforce/schema/Loan__c.LoanAmount__c'
 import LOAN_PURPOSE_FIELD from '@salesforce/schema/Loan__c.LoanPurpose__c'
-import templateOne from './loanForm.html';
-import templateTwo from './loanInformation.html';
+import PERSONAL_INFO_PAGE from './loanForm.html';
+import LOAN_INFO_PAGE from './loanInformation.html';
 
 export default class LoanForm extends LightningElement {
     value = ['S'];
 
     @track step = "1";
     blockNumber = 1;
+
+    personalInfoPageActive = true;
 
     basicInformation = {
         firstName: "",
@@ -130,7 +132,13 @@ export default class LoanForm extends LightningElement {
     }
 
     render() {
-        return templateOne;
+        return this.personalInfoPageActive ? PERSONAL_INFO_PAGE : LOAN_INFO_PAGE;
+    }
+
+    switchPages() {
+        this.personalInfoPageActive = !this.personalInfoPageActive;
+        this.updateProgressBar();
+        this.render();
     }
 
     // This fuction will handle the logic when the preview icon is clicked
@@ -169,7 +177,7 @@ export default class LoanForm extends LightningElement {
 
         /* Converting the NodeList retuned from querySelectorAll to an array so we can use the .every() method
         that is only available for arrays */
-        let inputs = [...this.template.querySelectorAll('.active lightning-input')];
+        let inputs = [...this.template.querySelectorAll('lightning-input')];
 
         inputs.every(element => {
             /* reportValidity() returns true or false based on whether or not
@@ -191,20 +199,15 @@ export default class LoanForm extends LightningElement {
 
         /* If all input fields are valid then this line of code will be reached 
         and the information of the input fields will be stored */
-        if(validInputs && this.blockNumber === 1) {
+        if(validInputs && this.personalInfoPageActive) {
             console.log("Saving customer basic information...");
             this.saveCustomerBasicInformation();
 
-            // Update blockNumber variable that keeps track of which current block we are one
-            this.blockNumber++;
-
-            // Display block number 2 to gather loan information
-            this.switchBlocks();
-
+            this.switchPages();
             return;
         }
 
-        if (validInputs && this.blockNumber === 2) {
+        if (validInputs && !this.personalInfoPageActive) {
             console.log("Saving customer loan information...");
             this.saveCustomerLoanInformation();
 
@@ -321,29 +324,16 @@ export default class LoanForm extends LightningElement {
 
     // This function wil be executed when the component is fully rendered
     renderedCallback() {
+        // Set up this evelent listener only when Personal Information page is rendered
+        if (this.personalInfoPageActive) {
+            /* Set up keypress event listener for the zip code and phone numbeer input fields.
+            Need the keypress event instead of the onchange attribute like the rest of the input fields
+            due to the logic used in isNumeric() to check if the user is entering something other than a number in the inputs */
+            const zipCodeInput = this.template.querySelector(".zip_code_input");
+            zipCodeInput.addEventListener("keypress", this.isNumeric);
 
-        /* Set up keypress event listener for the zip code and phone numbeer input fields.
-        Need the keypress event instead of the onchange attribute like the rest of the input fields
-        due to the logic used in isNumeric() to check if the user is entering something other than a number in the inputs */
-        const zipCodeInput = this.template.querySelector(".zip_code_input");
-        zipCodeInput.addEventListener("keypress", this.isNumeric);
-
-        const phoneNumberInput = this.template.querySelector(".phone_number_input");
-        phoneNumberInput.addEventListener("keypress", this.isNumeric);
-    }
-
-    switchBlocks() {
-        // Personal Information Block element
-        let personalInformationBlock = this.template.querySelector(".personal_info_block");
-        personalInformationBlock.classList.add("hidden");
-        personalInformationBlock.classList.remove("active");
-
-        // Loan Informatgion Block element
-        let loanInformationBlock = this.template.querySelector(".loan_info_block");
-        loanInformationBlock.classList.remove("hidden");
-        loanInformationBlock.classList.add("active");
-
-        // Update Progess Bar
-        this.updateProgressBar();
+            const phoneNumberInput = this.template.querySelector(".phone_number_input");
+            phoneNumberInput.addEventListener("keypress", this.isNumeric);
+        }
     }
 }

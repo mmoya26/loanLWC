@@ -17,6 +17,7 @@ import LOAN_AMOUNT_FIELD from '@salesforce/schema/Loan__c.LoanAmount__c'
 import LOAN_PURPOSE_FIELD from '@salesforce/schema/Loan__c.LoanPurpose__c'
 import PERSONAL_INFO_PAGE from './loanForm.html';
 import LOAN_INFO_PAGE from './loanInformation.html';
+import FINISH_PAGE from './finishPage.html';
 
 export default class LoanForm extends LightningElement {
     value = ['S'];
@@ -24,6 +25,7 @@ export default class LoanForm extends LightningElement {
     @track step = "1";
     
     personalInfoPageActive = true;
+    loanInfoPageActive = false;
 
     basicInformation = {
         firstName: "",
@@ -131,11 +133,24 @@ export default class LoanForm extends LightningElement {
     }
 
     render() {
-        return this.personalInfoPageActive ? PERSONAL_INFO_PAGE : LOAN_INFO_PAGE;
+        if (this.personalInfoPageActive) {
+            return PERSONAL_INFO_PAGE;
+        } else if (this.loanInfoPageActive) {
+            return LOAN_INFO_PAGE;
+        } else if (this.loanInfoPageActive === false && this.personalInfoPageActive === false) {
+            return FINISH_PAGE;
+        }
     }
 
     switchPages() {
+        if(this.personalInfoPageActive === false && this.loanInfoPageActive === true) {
+            this.loanInfoPageActive = false;
+            this.render();
+            return;
+        }
+
         this.personalInfoPageActive = !this.personalInfoPageActive;
+        this.loanInfoPageActive = !this.loanInfoPageActive;
         this.updateProgressBar();
         this.render();
     }
@@ -214,6 +229,8 @@ export default class LoanForm extends LightningElement {
             create the loan record right away after we finish saving the loan
             information */
             this.createLoanRecord();
+
+            this.switchPages();
         }
     }
 
@@ -292,6 +309,7 @@ export default class LoanForm extends LightningElement {
             })
             .catch(error => {
                 console.warn("Possibly an error");
+                console.log(error);
             });
     }
 
@@ -299,10 +317,6 @@ export default class LoanForm extends LightningElement {
         this.template.querySelectorAll('lightning-input').forEach(element => {
             element.value = "";
         });
-
-        // Reset value of radio buttons
-        // Still need to figure out a way to update the UI
-        value = ['S'];
     }
 
     // This function will be called every time a key is pressed in the Zip Code input field
@@ -319,6 +333,30 @@ export default class LoanForm extends LightningElement {
         let stringToNumber = parseInt(this.step);
         stringToNumber++;
         this.step = stringToNumber.toString();
+    }
+
+    restartForm() {
+        // Clear all the values from basicInformation varible
+        for (property in this.basicInformation) {
+            this.basicInformation[property] = "";
+        }
+        console.log(this.basicInformation);
+        console.log("basicInformation variable cleared out");
+
+        // Clear all the values from loanInformation varible
+        for (property in this.loanInformation) {
+            this.loanInformation[property] = "";
+        }
+        console.log(this.loanInformation);
+        console.log("loanInformation variable cleared out");
+
+        this.value = ['S'];
+        this.step = "1";
+
+        this.personalInfoPageActive = true;
+        this.loanInfoPageActive = false;
+
+        this.render();
     }
 
     // This function wil be executed when the component is fully rendered

@@ -1,0 +1,25 @@
+.success_message {
+    background-color: #44bd32;
+    color: white;
+    font-size: 1.25rem;
+    cursor: pointer;
+    width: 400px;
+    text-align: center;
+    transition: all ease .3s;
+}
+
+.success_message p span {
+    content: 'Loan application sucessfully submitted';
+}
+
+.success_message:hover p span {
+    display: none;
+}
+
+.success_message:hover p::after {
+    content: 'Reset Application';
+}
+
+.success_message:hover {
+    background-color: #7f8fa6;
+}

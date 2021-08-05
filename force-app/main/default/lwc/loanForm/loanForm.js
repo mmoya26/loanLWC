@@ -47,89 +47,83 @@ export default class LoanForm extends LightningElement {
         loanAmount: ""
     }
 
-    // List of all states for the State select field to be populated
-    states = ["AK",
-        "AL",
-        "AR",
-        "AS",
-        "AZ",
-        "CA",
-        "CO",
-        "CT",
-        "DC",
-        "DE",
-        "FL",
-        "GA",
-        "GU",
-        "HI",
-        "IA",
-        "ID",
-        "IL",
-        "IN",
-        "KS",
-        "KY",
-        "LA",
-        "MA",
-        "MD",
-        "ME",
-        "MI",
-        "MN",
-        "MO",
-        "MS",
-        "MT",
-        "NC",
-        "ND",
-        "NE",
-        "NH",
-        "NJ",
-        "NM",
-        "NV",
-        "NY",
-        "OH",
-        "OK",
-        "OR",
-        "PA",
-        "PR",
-        "RI",
-        "SC",
-        "SD",
-        "TN",
-        "TX",
-        "UT",
-        "VA",
-        "VI",
-        "VT",
-        "WA",
-        "WI",
-        "WV",
-        "WY"
-    ]
+    saveCustomerBasicInformation() {
+        // Selecting all of the inputs and their values from the first block of information
+        let firstNameInput = this.template.querySelector(".first_name_input").value;
+        let lastNameInput = this.template.querySelector(".last_name_input").value;
+        let emailAddressInput = this.template.querySelector(".email_address_input").value;
+        let dateOfBirthInput = this.template.querySelector(".date_of_birth_input").value;
+        let socialSecurityInput = this.template.querySelector(".social_security_number_input").value;
+        let streetAddressOneInput = this.template.querySelector(".street_address_one_input").value;
+        let streetAddressTwoInput = this.template.querySelector(".street_address_two_input").value;
+        let cityInput = this.template.querySelector(".city_input").value;
+        let stateInput = this.template.querySelector(".state_input").value;
+        let zipCodeInput = this.template.querySelector(".zip_code_input").value;
+        let phoneNumberInput = this.template.querySelector(".phone_number_input").value;
+        let civilStatusInput = this.value;
 
-    get options() {
-        return [
-            {
-                label: 'Separated',
-                value: 'S'
-            },
+        // Setting the data of each key with according value to the basicInformation object
+        this.basicInformation.firstName = firstNameInput;
+        this.basicInformation.lastName = lastNameInput;
+        this.basicInformation.emailAddress = emailAddressInput;
+        this.basicInformation.dateOfBirth = dateOfBirthInput;
+        this.basicInformation.SSN = socialSecurityInput;
+        this.basicInformation.streetAddressOne = streetAddressOneInput;
+        this.basicInformation.streetAddressTwo = streetAddressTwoInput;
+        this.basicInformation.city = cityInput;
+        this.basicInformation.state = stateInput;
+        this.basicInformation.zipCode = zipCodeInput;
+        this.basicInformation.phoneNumber = phoneNumberInput;
+        this.basicInformation.civilStatus = civilStatusInput;
 
-            {
-                label: "Married",
-                value: "M"
-            },
-
-            {
-                label: "Unmarried",
-                value: "U"
-            }
-        ];
+        console.log(this.basicInformation);
     }
 
-    get selectedValues() {
-        return this.value.join(',');
+    saveCustomerLoanInformation() {
+        // Selecting all of the inputs and their values from the second(last) block of information
+        let loanPurposeInput = this.template.querySelector(".loan_purpose_input").value;
+        let loanAmountInput = this.template.querySelector(".loan_amount_input").value;
+
+        // Setting the data of each key with according value to the loanInformation object
+        this.loanInformation.loanPurpose = loanPurposeInput;
+        this.loanInformation.loanAmount = loanAmountInput;
+
+        console.log(this.loanInformation);
     }
 
-    handleChange(e) {
-        this.value = e.detail.value;
+    createLoanRecord() {
+        console.log("Creating Loan Record...");
+
+        const fields = {};
+
+        // All fields that used to store the data from basicInformation object 
+        fields[FIRST_NAME_FIELD.fieldApiName] = this.basicInformation.firstName;
+        fields[LAST_NAME_FIELD.fieldApiName] = this.basicInformation.lastName;
+        fields[EMAIL_ADDRESS_FIELD.fieldApiName] = this.basicInformation.emailAddress;
+        fields[DATE_OF_BIRTH_FIELD.fieldApiName] = this.basicInformation.dateOfBirth;
+        fields[SSN_FIELD.fieldApiName] = this.basicInformation.SSN;
+        fields[STREET_ADDRESS_ONE_FIELD.fieldApiName] = this.basicInformation.streetAddressOne;
+        fields[STREET_ADDRESS_TWO_FIELD.fieldApiName] = this.basicInformation.streetAddressTwo;
+        fields[CITY_FIELD.fieldApiName] = this.basicInformation.city;
+        fields[STATE_FIELD.fieldApiName] = this.basicInformation.state;
+        fields[ZIP_CODE_FIELD.fieldApiName] = this.basicInformation.zipCode;
+        fields[PHONE_NUMBER_FIELD.fieldApiName] = this.basicInformation.phoneNumber;
+        fields[CIVIL_STATUS_FIELD.fieldApiName] = this.basicInformation.civilStatus;
+        fields[LOAN_PURPOSE_FIELD.fieldApiName] = this.loanInformation.loanPurpose;
+        fields[LOAN_AMOUNT_FIELD.fieldApiName] = this.loanInformation.loanAmount;
+
+        const recordInput = { apiName: LOAN_OBJECT.objectApiName, fields};
+        createRecord(recordInput)
+            .then(() => {
+                console.log("Loan Record created sucessfully");
+
+                // Clean all input fields
+                this.cleanInputFields(); 
+            })
+            .catch(error => {
+                console.warn("Possibly an error");
+                console.log(error);
+            });
     }
 
     render() {
@@ -234,85 +228,6 @@ export default class LoanForm extends LightningElement {
         }
     }
 
-    saveCustomerBasicInformation() {
-        // Selecting all of the inputs and their values from the first block of information
-        let firstNameInput = this.template.querySelector(".first_name_input").value;
-        let lastNameInput = this.template.querySelector(".last_name_input").value;
-        let emailAddressInput = this.template.querySelector(".email_address_input").value;
-        let dateOfBirthInput = this.template.querySelector(".date_of_birth_input").value;
-        let socialSecurityInput = this.template.querySelector(".social_security_number_input").value;
-        let streetAddressOneInput = this.template.querySelector(".street_address_one_input").value;
-        let streetAddressTwoInput = this.template.querySelector(".street_address_two_input").value;
-        let cityInput = this.template.querySelector(".city_input").value;
-        let stateInput = this.template.querySelector(".state_input").value;
-        let zipCodeInput = this.template.querySelector(".zip_code_input").value;
-        let phoneNumberInput = this.template.querySelector(".phone_number_input").value;
-        let civilStatusInput = this.value;
-
-        // Setting the data of each key with according value to the basicInformation object
-        this.basicInformation.firstName = firstNameInput;
-        this.basicInformation.lastName = lastNameInput;
-        this.basicInformation.emailAddress = emailAddressInput;
-        this.basicInformation.dateOfBirth = dateOfBirthInput;
-        this.basicInformation.SSN = socialSecurityInput;
-        this.basicInformation.streetAddressOne = streetAddressOneInput;
-        this.basicInformation.streetAddressTwo = streetAddressTwoInput;
-        this.basicInformation.city = cityInput;
-        this.basicInformation.state = stateInput;
-        this.basicInformation.zipCode = zipCodeInput;
-        this.basicInformation.phoneNumber = phoneNumberInput;
-        this.basicInformation.civilStatus = civilStatusInput;
-
-        console.log(this.basicInformation);
-    }
-
-    saveCustomerLoanInformation() {
-        // Selecting all of the inputs and their values from the second(last) block of information
-        let loanPurposeInput = this.template.querySelector(".loan_purpose_input").value;
-        let loanAmountInput = this.template.querySelector(".loan_amount_input").value;
-
-        // Setting the data of each key with according value to the loanInformation object
-        this.loanInformation.loanPurpose = loanPurposeInput;
-        this.loanInformation.loanAmount = loanAmountInput;
-
-        console.log(this.loanInformation);
-    }
-
-    createLoanRecord() {
-        console.log("Creating Loan Record...");
-
-        const fields = {};
-
-        // All fields that used to store the data from basicInformation object 
-        fields[FIRST_NAME_FIELD.fieldApiName] = this.basicInformation.firstName;
-        fields[LAST_NAME_FIELD.fieldApiName] = this.basicInformation.lastName;
-        fields[EMAIL_ADDRESS_FIELD.fieldApiName] = this.basicInformation.emailAddress;
-        fields[DATE_OF_BIRTH_FIELD.fieldApiName] = this.basicInformation.dateOfBirth;
-        fields[SSN_FIELD.fieldApiName] = this.basicInformation.SSN;
-        fields[STREET_ADDRESS_ONE_FIELD.fieldApiName] = this.basicInformation.streetAddressOne;
-        fields[STREET_ADDRESS_TWO_FIELD.fieldApiName] = this.basicInformation.streetAddressTwo;
-        fields[CITY_FIELD.fieldApiName] = this.basicInformation.city;
-        fields[STATE_FIELD.fieldApiName] = this.basicInformation.state;
-        fields[ZIP_CODE_FIELD.fieldApiName] = this.basicInformation.zipCode;
-        fields[PHONE_NUMBER_FIELD.fieldApiName] = this.basicInformation.phoneNumber;
-        fields[CIVIL_STATUS_FIELD.fieldApiName] = this.basicInformation.civilStatus;
-        fields[LOAN_PURPOSE_FIELD.fieldApiName] = this.loanInformation.loanPurpose;
-        fields[LOAN_AMOUNT_FIELD.fieldApiName] = this.loanInformation.loanAmount;
-
-        const recordInput = { apiName: LOAN_OBJECT.objectApiName, fields};
-        createRecord(recordInput)
-            .then(() => {
-                console.log("Loan Record created sucessfully");
-
-                // Clean all input fields
-                this.cleanInputFields(); 
-            })
-            .catch(error => {
-                console.warn("Possibly an error");
-                console.log(error);
-            });
-    }
-
     cleanInputFields() {
         this.template.querySelectorAll('lightning-input').forEach(element => {
             element.value = "";
@@ -337,14 +252,14 @@ export default class LoanForm extends LightningElement {
 
     restartForm() {
         // Clear all the values from basicInformation varible
-        for (property in this.basicInformation) {
+        for (let property in this.basicInformation) {
             this.basicInformation[property] = "";
         }
         console.log(this.basicInformation);
         console.log("basicInformation variable cleared out");
 
         // Clear all the values from loanInformation varible
-        for (property in this.loanInformation) {
+        for (let property in this.loanInformation) {
             this.loanInformation[property] = "";
         }
         console.log(this.loanInformation);
@@ -372,5 +287,98 @@ export default class LoanForm extends LightningElement {
             const phoneNumberInput = this.template.querySelector(".phone_number_input");
             phoneNumberInput.addEventListener("keypress", this.isNumeric);
         }
+
+        if(this.personalInfoPageActive === false &&  this.loanInfoPageActive === false) {
+            let sucessMessageContainer = this.template.querySelector(".success_message");
+
+            sucessMessageContainer.addEventListener("click", () => {
+               this.restartForm();
+            })
+        }
+    }
+
+    // List of all states for the State select field to be populated
+    states = ["AK",
+        "AL",
+        "AR",
+        "AS",
+        "AZ",
+        "CA",
+        "CO",
+        "CT",
+        "DC",
+        "DE",
+        "FL",
+        "GA",
+        "GU",
+        "HI",
+        "IA",
+        "ID",
+        "IL",
+        "IN",
+        "KS",
+        "KY",
+        "LA",
+        "MA",
+        "MD",
+        "ME",
+        "MI",
+        "MN",
+        "MO",
+        "MS",
+        "MT",
+        "NC",
+        "ND",
+        "NE",
+        "NH",
+        "NJ",
+        "NM",
+        "NV",
+        "NY",
+        "OH",
+        "OK",
+        "OR",
+        "PA",
+        "PR",
+        "RI",
+        "SC",
+        "SD",
+        "TN",
+        "TX",
+        "UT",
+        "VA",
+        "VI",
+        "VT",
+        "WA",
+        "WI",
+        "WV",
+        "WY"
+    ]
+
+    get options() {
+        return [
+            {
+                label: 'Separated',
+                value: 'S'
+            },
+
+            {
+                label: "Married",
+                value: "M"
+            },
+
+            {
+                label: "Unmarried",
+                value: "U"
+            }
+        ];
+    }
+
+    get selectedValues() {
+        return this.value.join(',');
+    }
+
+    handleChange(e) {
+        this.value = e.detail.value;
     }
 }

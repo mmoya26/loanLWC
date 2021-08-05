@@ -3,7 +3,7 @@
     color: white;
     font-size: 1.25rem;
     cursor: pointer;
-    width: 400px;
+    width: 100%;
     text-align: center;
     transition: all ease .3s;
 }
